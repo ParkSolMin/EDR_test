@@ -2,7 +2,9 @@
 #include "TraceSession.h"
 #include "ETWTrace.h"
 
-struct __declspec(uuid("{77754E9B-264B-4D8D-B981-E4135C1ECB0C}")) NODEJS_PROVIDER_GUID_HOLDER;
+//struct __declspec(uuid("{77754E9B-264B-4D8D-B981-E4135C1ECB0C}")) NODEJS_PROVIDER_GUID_HOLDER;
+
+struct __declspec(uuid("{22fb2cd6-0e7b-422b-a0c7-2fad1fd0e716}")) NODEJS_PROVIDER_GUID_HOLDER; 
 static const auto NODEJS_PROVIDER_GUID = __uuidof(NODEJS_PROVIDER_GUID_HOLDER);
 
 int main()

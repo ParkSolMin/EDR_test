@@ -163,7 +163,10 @@ void NodeProvider::OnProcessEvent(PEVENT_RECORD pEvent)
 	}
 	else if (DecodingSourceXMLFile == pInfo->DecodingSource) // Instrumentation manifest
 	{
-		wprintf(L"Event ID: %d\n", pInfo->EventDescriptor.Id);
+		// 이벤트 ID 출력
+		if (pInfo->EventDescriptor.Id != 9 && pInfo->EventDescriptor.Id != 7 && pInfo->EventDescriptor.Id != 21 && pInfo->EventDescriptor.Id != 6) {
+			wprintf(L"Event ID: %d\n", pInfo->EventDescriptor.Id);
+		}
 	}
 	else // Not handling the WPP case
 	{
@@ -181,10 +184,11 @@ void NodeProvider::OnProcessEvent(PEVENT_RECORD pEvent)
 	TimeStamp = pEvent->EventHeader.TimeStamp.QuadPart;
 	Nanoseconds = (TimeStamp % 10000000) * 100;
 
-	// 시간
-	wprintf(L"%02d/%02d/%02d %02d:%02d:%02d.%I64u\n",
-		stLocal.wMonth, stLocal.wDay, stLocal.wYear, stLocal.wHour, stLocal.wMinute, stLocal.wSecond, Nanoseconds);
-
+	// 시간 출력
+	if (pInfo->EventDescriptor.Id != 9 && pInfo->EventDescriptor.Id != 7 && pInfo->EventDescriptor.Id != 21 && pInfo->EventDescriptor.Id != 6) {
+		wprintf(L"%02d/%02d/%02d %02d:%02d:%02d.%I64u\n",
+			stLocal.wMonth, stLocal.wDay, stLocal.wYear, stLocal.wHour, stLocal.wMinute, stLocal.wSecond, Nanoseconds);
+	}
 
 	// If the event contains event-specific data use TDH to extract
 	// the event data. For this example, to extract the data, the event 
@@ -213,9 +217,10 @@ void NodeProvider::OnProcessEvent(PEVENT_RECORD pEvent)
 
 	for (USHORT i = 0; i < pInfo->TopLevelPropertyCount; i++)
 	{
-		// 여기서 프린트하넹
-		pUserData = PrintProperties(pEvent, pInfo, PointerSize, i, pUserData, pEndOfUserData);
-
+		// 로그 프로퍼티 출력 메소드
+		if (pInfo->EventDescriptor.Id != 9 && pInfo->EventDescriptor.Id != 7 && pInfo->EventDescriptor.Id != 21 && pInfo->EventDescriptor.Id != 6) {
+			pUserData = PrintProperties(pEvent, pInfo, PointerSize, i, pUserData, pEndOfUserData);
+		}
 		if (NULL == pUserData)
 		{
 			wprintf(L"Printing top level properties failed.\n");
